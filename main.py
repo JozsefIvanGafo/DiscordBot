@@ -1,9 +1,11 @@
 import sys
 from dotenv import load_dotenv
 import os
+import asyncio
+from src.bot import create_bot
 
 
-if __name__ == "__main__":
+async def main():
     # check if .env file exists
     try:
         with open('.env') as f:
@@ -31,13 +33,22 @@ if __name__ == "__main__":
 
     #We extract environment variables
     try:
-        load_dotenv()
+        load_dotenv(dotenv_path='.env')
 
         DISCORD_TOKEN = os.getenv('DISCORD_TOKEN')
         PREFIX = os.getenv('PREFIX')
         OWNER_ID = os.getenv('OWNER_ID')
+
+        if not DISCORD_TOKEN or not PREFIX or not OWNER_ID:
+            raise Exception("Missing environment variables")
+        
     except Exception as e:
         print(f"Error: {e}")
         sys.exit(1)
-
     
+    # Create and run the bot
+    bot = create_bot(PREFIX, OWNER_ID)
+    await bot.start(DISCORD_TOKEN)
+
+if __name__ == "__main__":
+    asyncio.run(main())

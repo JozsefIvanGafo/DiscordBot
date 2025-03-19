@@ -48,6 +48,7 @@ async def main():
     
     # Create and run the bot
     bot = create_bot(PREFIX, OWNER_ID)
+    await bot.load_extensions()
     await bot.start(DISCORD_TOKEN)
 
 if __name__ == "__main__":

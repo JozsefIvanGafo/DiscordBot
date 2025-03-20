@@ -21,11 +21,11 @@ class SetPrefix(commands.Cog):
     # Prefix and slash commands
 
     @bridge.bridge_command(name="set_prefix", 
-                           description="Replies with the bot's latency.",
+                           description="set the bot prefix",
                            )
     @commands.has_permissions(administrator=True)
     async def ping_prefix(self, ctx,prefix):
-        """Check the bot's latency"""
+        """set the bot prefix"""
         await self._set_prefix(ctx,prefix)
     
 

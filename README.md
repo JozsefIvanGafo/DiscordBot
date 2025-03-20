@@ -1,7 +1,7 @@
 # DiscordBot 
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Sponsor](https://img.shields.io/badge/Sponsor-❤️-red.svg)](https://github.com/sponsors/yourusername)
+[![Sponsor](https://img.shields.io/badge/Sponsor-❤️-red.svg)](https://ko-fi.com/jozsef)
 
 ## 🌐 Languages / Idiomas / Nyelvek / Langues
 - [English 🇬🇧](#english)

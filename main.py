@@ -24,6 +24,9 @@ async def main():
                 #ask the user for the owner id
                 owner_id = input("Enter your owner id: ")
                 f.write(f"OWNER_ID={owner_id}\n")
+                #ask guild id
+                guild_id = input("Enter your guild id: ")
+                f.write(f"GUILD_ID={guild_id}\n")
                 #save the file
                 f.close()
 

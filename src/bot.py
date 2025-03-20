@@ -2,6 +2,7 @@ import discord
 from discord.ext import commands, bridge
 import logging
 from src.commands.ping import Ping
+from src.moderation.set_prefix import SetPrefix
 
 # Log info
 logging.basicConfig(
@@ -26,24 +27,20 @@ class DiscordBot(bridge.Bot):
             **kwargs
         )
 
-
     async def load_extensions(self) -> None:
         """Load all extensions"""
         logger.info('Loading extensions...')
         self.add_cog(Ping(self))
-
+        self.add_cog(SetPrefix(self))
+        
         #check extension loaded
-
-
         logger.info('Extensions loaded')
-
 
     async def on_ready(self) -> None:
         """Called when the bot is ready to use"""
         logger.info(f'Logged in as {self.user} (ID: {self.user.id})')
         logger.info(f'Connected to {len(self.guilds)} guilds')
         
-
 
 def create_bot(prefix: str, owner_id: str) -> DiscordBot:
     """Create and return a bot instance"""

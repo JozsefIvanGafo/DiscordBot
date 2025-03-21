@@ -26,10 +26,10 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 
-### Installation
+#### Standard Installation
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/DiscordBot.git
+    git clone https://github.com/JozsefIvanGafo/DiscordBot.git
     cd DiscordBot
     ```
 2. Set up the virtual environment (see above)
@@ -79,7 +79,7 @@ source venv/bin/activate
 ### Instalación
 1. Clona el repositorio:
     ```bash
-    git clone https://github.com/yourusername/DiscordBot.git
+    git clone https://github.com/JozsefIvanGafo/DiscordBot.git
     cd DiscordBot
     ```
 2. Configura el entorno virtual (ver arriba)
@@ -129,7 +129,7 @@ source venv/bin/activate
 ### Telepítés
 1. Klónozd a tárolót:
     ```bash
-    git clone https://github.com/yourusername/DiscordBot.git
+    git clone https://github.com/JozsefIvanGafo/DiscordBot.git
     cd DiscordBot
     ```
 2. Állítsd be a virtuális környezetet (lásd fentebb)
@@ -179,7 +179,7 @@ source venv/bin/activate
 ### Installation
 1. Cloner le dépôt:
     ```bash
-    git clone https://github.com/yourusername/DiscordBot.git
+    git clone https://github.com/JozsefIvanGafo/DiscordBot.git
     cd DiscordBot
     ```
 2. Configurer l'environnement virtuel (voir ci-dessus)

@@ -4,6 +4,7 @@ import logging
 from src.commands.ping import Ping
 from .moderation import AuditLog,SetPrefix
 from src.events.birthdate.birthdate import BirthDate
+from .music import Music
 
 # Log info
 logging.basicConfig(
@@ -35,6 +36,7 @@ class DiscordBot(bridge.Bot):
         self.add_cog(SetPrefix(self))
         self.add_cog(BirthDate(self))
         self.add_cog(AuditLog(self))
+        self.add_cog(Music(self))
         
         #check extension loaded
         logger.info('Extensions loaded')

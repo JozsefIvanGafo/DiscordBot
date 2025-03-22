@@ -210,4 +210,4 @@ Le bot utilise des variables d'environnement stockées dans un fichier .env. Lor
 Les commandes sont organisées dans des modules d'extension. Consultez la documentation des extensions pour les commandes disponibles.
 
 ## License / Licencia / Licenc / Licence
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the Apache 2.0 License - see the LICENSE file for details.

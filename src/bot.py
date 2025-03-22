@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands, bridge
 import logging
 from src.commands.ping import Ping
-from src.moderation.set_prefix import SetPrefix
+from .moderation import AuditLog,SetPrefix
 from src.events.birthdate.birthdate import BirthDate
 
 # Log info
@@ -34,6 +34,7 @@ class DiscordBot(bridge.Bot):
         self.add_cog(Ping(self))
         self.add_cog(SetPrefix(self))
         self.add_cog(BirthDate(self))
+        self.add_cog(AuditLog(self))
         
         #check extension loaded
         logger.info('Extensions loaded')

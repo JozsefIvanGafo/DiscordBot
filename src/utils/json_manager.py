@@ -10,10 +10,9 @@ logger = logging.getLogger('discord')
 
 class JsonManager:
     def __init__(self, filename):
-        # Get path to src folder (3 levels up from current file)
-        current_path = os.path.dirname(os.path.abspath(__file__))  # birthdate folder
-        events_path = os.path.dirname(current_path)                # events folder
-        src_path = os.path.dirname(events_path)                    # src folder
+        # Get correct path to data directory
+        current_path = os.path.dirname(os.path.abspath(__file__))  # utils folder
+        src_path = os.path.dirname(current_path)                   # src folder
         
         # Create data folder in src directory
         data_folder = os.path.join(src_path, 'data')

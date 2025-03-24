@@ -1,3 +1,5 @@
 from .ping import Ping
 
-__name__ = "commands"
+__name__ = [
+    "Ping"
+]

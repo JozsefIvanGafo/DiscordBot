@@ -1,2 +1,3 @@
 # Ignore all JSON data files
 *.json
+*.txt

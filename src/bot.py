@@ -1,9 +1,9 @@
 import discord
 from discord.ext import commands, bridge
 import logging
-from src.commands.ping import Ping
+from .commands import Ping
 from .moderation import AuditLog,SetPrefix
-from src.events.birthdate.birthdate import BirthDate
+from .events import BirthDate
 from .music import Music
 
 # Log info

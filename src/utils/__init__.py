@@ -1,5 +1,5 @@
-from .json_manager import JSONManager
+from .json_manager import JsonManager
 
 __all__ = [
-    'JSONManager',
+    'JsonManager',
 ]

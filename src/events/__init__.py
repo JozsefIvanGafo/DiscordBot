@@ -1,5 +1,3 @@
-from .birthdate import Birthdate
+from .birthdate import BirthDate
 
-__all__ = [
-    Birthdate,
-]
+__all__ = ['BirthDate']

@@ -3,7 +3,7 @@ import discord
 from discord.ext import commands, bridge, tasks
 import logging
 from datetime import datetime, timedelta
-from .json_manager import JsonManager
+from ...utils.json_manager import JsonManager
 import threading
 
 logger = logging.getLogger('discord')

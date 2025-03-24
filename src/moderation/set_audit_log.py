@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands, bridge
 import logging
 import threading
-from ..events.birthdate.json_manager import JsonManager 
+from ..utils.json_manager import JsonManager 
 
 
 logger = logging.getLogger('discord')

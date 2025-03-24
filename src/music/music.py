@@ -6,7 +6,7 @@ import yt_dlp
 from .services.player_service import PlayerService
 from .services.controller_service import ControllerService
 from .services.auto_disconnect_service import AutoDisconnectService
-from .handlers.command_handler.command_handlers import CommandHandlers, EventHandlers
+from .handlers import CommandHandlers, EventHandlers
 
 
 from .utils import (

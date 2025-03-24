@@ -1,7 +1,7 @@
 import logging
 
-from utils import (check_empty_vc,
-                   handle_voice_state,
+from .utils import (check_empty_voice_channel,
+                   handle_voice_state_update,
                    handle_user_join,
                    handle_user_leave,
                    handle_user_move,
@@ -17,7 +17,7 @@ class EventHandlers:
     
     async def handle_voice_state_update(self, member, before, after):
         """Handle voice state changes"""
-        await handle_voice_state(self, member, before, after)
+        await handle_voice_state_update(self, member, before, after)
     
     async def _handle_bot_voice_update(self, member, before, after):
         """Handle the bot's own voice state updates"""
@@ -37,7 +37,7 @@ class EventHandlers:
     
     async def _check_empty_voice_channel(self, member, before, after):
         """Check if the voice channel is empty and start disconnect timer if needed"""
-        await check_empty_vc(self, member, before, after)
+        await check_empty_voice_channel(self, member, before, after)
     
     async def force_disconnect(self, guild_id):
         """Force disconnect from voice in a specific guild"""

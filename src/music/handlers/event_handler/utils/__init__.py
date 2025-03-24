@@ -13,5 +13,7 @@ __all__ = [
     'handle_user_leave',
     'handle_user_move',
     'handle_bot_voice_update',
-    'force_disconnect'
+    'force_disconnect',
+    'check_empty_voice_channel'
+
 ]

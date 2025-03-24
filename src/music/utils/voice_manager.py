@@ -22,6 +22,7 @@ class VoiceManager:
     
     async def join_voice_channel(self, ctx):
         """Join a voice channel"""
+        user = ctx.user
         if ctx.author.voice is None:
             await ctx.respond("You need to be in a voice channel to use this command")
             return None

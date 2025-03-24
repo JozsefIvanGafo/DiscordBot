@@ -61,3 +61,7 @@ class JsonManager:
         except KeyError:
             pass
         self.save()
+        
+    def get_all(self):
+        """Return all data stored in the JSON file."""
+        return self.data

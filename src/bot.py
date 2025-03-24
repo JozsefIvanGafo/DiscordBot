@@ -46,6 +46,13 @@ class DiscordBot(bridge.Bot):
         logger.info(f'Logged in as {self.user} (ID: {self.user.id})')
         logger.info(f'Connected to {len(self.guilds)} guilds')
         
+        # Sync application commands with Discord
+        try:
+            logger.info("Syncing application commands...")
+            await self.sync_commands()
+            logger.info("Application commands synced successfully!")
+        except Exception as e:
+            logger.error(f"Error syncing application commands: {e}")
 
 def create_bot(prefix: str, owner_id: str) -> DiscordBot:
     """Create and return a bot instance"""

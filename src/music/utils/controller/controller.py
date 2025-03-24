@@ -97,7 +97,7 @@ class MusicControllerView(View):
         
         # Second row - volume controls
         self.add_item(volume_down_button)
-        self.add_item(volume_display_button)  # Add the volume display button between the controls
+        self.add_item(volume_display_button) 
         self.add_item(volume_up_button)
         self.add_item(join_button)
         self.add_item(leave_button)
@@ -148,7 +148,7 @@ class MusicControllerView(View):
         """Show a modal to add a song"""
         # Create the modal
         modal = AddSongModal(self.music_cog, self.guild_id)
-        
+
         # Send the modal
         await interaction.response.send_modal(modal)
 

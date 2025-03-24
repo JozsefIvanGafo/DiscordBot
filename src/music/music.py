@@ -6,8 +6,9 @@ import yt_dlp
 from .services.player_service import PlayerService
 from .services.controller_service import ControllerService
 from .services.auto_disconnect_service import AutoDisconnectService
-from .handlers.command_handlers import CommandHandlers
-from .handlers.event_handlers import EventHandlers
+from .handlers.command_handler.command_handlers import CommandHandlers, EventHandlers
+
+
 from .utils import (
     get_ytdlp_options, get_ffmpeg_options,
     QueueManager, VoiceManager

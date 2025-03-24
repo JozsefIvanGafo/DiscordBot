@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands, bridge
 import logging
-from .commands import Ping
+from .commands import Ping, Roulette
 from .moderation import AuditLog,SetPrefix
 from .events import BirthDate
 from .music import Music
@@ -33,6 +33,7 @@ class DiscordBot(bridge.Bot):
         """Load all extensions"""
         logger.info('Loading extensions...')
         self.add_cog(Ping(self))
+        self.add_cog(Roulette(self))
         self.add_cog(SetPrefix(self))
         self.add_cog(BirthDate(self))
         self.add_cog(AuditLog(self))

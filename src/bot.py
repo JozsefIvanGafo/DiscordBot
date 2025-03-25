@@ -5,6 +5,7 @@ from .commands import Ping, Roulette
 from .moderation import AuditLog,SetPrefix
 from .events import BirthDate
 from .music import Music
+from .role_manager import RoleManager
 
 # Log info
 logging.basicConfig(
@@ -38,6 +39,7 @@ class DiscordBot(bridge.Bot):
         self.add_cog(BirthDate(self))
         self.add_cog(AuditLog(self))
         self.add_cog(Music(self))
+        self.add_cog(RoleManager(self))
         
         #check extension loaded
         logger.info('Extensions loaded')

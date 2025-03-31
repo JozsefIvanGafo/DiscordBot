@@ -2,25 +2,17 @@ import discord
 from ...formatter import format_duration, split_text
 
 async def clear_queue_callback(self, interaction):
-        """Clear the queue"""
-        await interaction.response.defer(ephemeral=True)
-        voice_client = self.music_cog.voice_manager.get_voice_client(self.guild_id)
-        
-        if voice_client and voice_client.is_connected():
-            # Stop playback
-            if voice_client.is_playing():
-                voice_client.stop()
-            
-            # Clear queue
-            self.music_cog.queue_manager.clear_queue(self.guild_id)
-            self.music_cog.queue_manager.clear_current_song(self.guild_id)
-            
-            await interaction.followup.send("Queue cleared", ephemeral=True)
-            
-            # Update controller
-            await self.music_cog.update_controller(self.guild_id)
-        else:
-            await interaction.followup.send("Not currently playing anything", ephemeral=True)
+    guild_id = interaction.guild_id
+    
+    # Clear the queue
+    self.music_cog.queue_manager.clear_queue(guild_id)
+    
+    await interaction.response.defer(ephemeral=True)
+    
+    # Use controller_service instead of direct call to update_controller
+    await self.music_cog.controller_service.update_controller(self.guild_id)
+    
+    await interaction.followup.send("Queue cleared!", ephemeral=True)
 
 
 async def queue_callback(self, interaction):

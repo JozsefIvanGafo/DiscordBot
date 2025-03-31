@@ -32,4 +32,4 @@ async def join_vc_callback(self, interaction):
                 return
                 
         # Update controller
-        await self.music_cog.update_controller(guild_id)
+        await self.music_cog.controller_service.update_controller(guild_id)

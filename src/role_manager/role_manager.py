@@ -1,13 +1,9 @@
 import discord
 from discord.ext import commands, bridge
 import logging
-from discord.ui import View, Button, Select
-import asyncio
+from discord.ui import Button
 import json
 import os
-import re
-from typing import Dict, Optional
-from .utils import (get_emoji_from_str, is_valid_emoji)
 from .views import RoleSelectView, AdminRoleView
 
 

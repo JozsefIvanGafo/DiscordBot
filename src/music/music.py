@@ -3,16 +3,26 @@ from discord.ext import commands, bridge
 import logging
 import yt_dlp
 
+import json
+import os
+
 from .services.player_service import PlayerService
 from .services.controller_service import ControllerService
 from .services.auto_disconnect_service import AutoDisconnectService
-from .handlers import CommandHandlers, EventHandlers
-
+from .handlers import CommandHandlers, EventHandlers 
 
 from .utils import (
     get_ytdlp_options, get_ffmpeg_options,
     QueueManager, VoiceManager
 )
+
+# Define data directory path
+DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
+# Ensure data directory exists
+os.makedirs(DATA_DIR, exist_ok=True)
+
+# Path for music controller storage
+CONTROLLER_CONFIG_PATH = os.path.join(DATA_DIR, "music_controllers.json")
 
 logger = logging.getLogger('discord')
 
@@ -39,6 +49,9 @@ class Music(commands.Cog):
         # Initialize handlers
         self.command_handlers = CommandHandlers(self)
         self.event_handlers = EventHandlers(self)
+        
+        # Load saved controllers
+        self.bot.loop.create_task(self.controller_service.restore_controllers())
         
         logger.info("Music cog loaded with commands")
     
@@ -76,7 +89,12 @@ class Music(commands.Cog):
     @commands.has_permissions(manage_channels=True)   
     @bridge.bridge_command(name="set_music_channel", description="Set the current channel as the dedicated music channel")
     async def set_music_channel(self, ctx):
-        await self.command_handlers.handle_music_channel(ctx)
+        success = await self.command_handlers.handle_music_channel(ctx)
+        if success:
+            await ctx.respond("✅ Music controller has been set up in this channel. It will persist across bot restarts.", ephemeral=True)
+        else:
+            await ctx.respond("⚠️ There was an error setting up the music controller.", ephemeral=True)
+
 
 def setup(bot):
     bot.add_cog(Music(bot))

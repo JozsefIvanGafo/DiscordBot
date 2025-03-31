@@ -1,7 +1,7 @@
 from .youtube import *
 from .queue_manager import QueueManager
 from .voice_manager import VoiceManager
-from .formatter import format_duration, split_text
+from .formatter import format_duration
 from .controller import MusicControllerView
 
 __all__ = [
@@ -9,6 +9,6 @@ __all__ = [
     'is_youtube_url', 'is_youtube_playlist', 
     'extract_info', 'get_song_info',
     'QueueManager', 'VoiceManager',
-    'format_duration', 'split_text',
+    'format_duration', 'format_time',
     'MusicControllerView'
 ]

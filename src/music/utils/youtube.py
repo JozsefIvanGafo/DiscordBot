@@ -25,6 +25,15 @@ def get_ytdlp_options():
         'no_warnings': True,
         'default_search': 'auto',
         'source_address': '0.0.0.0',
+        # Add cookies and user agent to avoid 403 errors
+        'cookiefile': None,
+        'age_limit': None,
+        'extractor_args': {
+            'youtube': {
+                'player_client': ['android', 'web'],
+                'skip': ['hls', 'dash']
+            }
+        }
     }
 
 def get_ffmpeg_options():
@@ -59,7 +68,8 @@ async def get_song_info(ytdl, url):
             return [{'title': entry.get('title', 'Unknown'), 
                     'url': entry.get('url', None),
                     'webpage_url': entry.get('webpage_url', url),
-                    'duration': entry.get('duration', 0)} 
+                    'duration': entry.get('duration', 0),
+                    'video_id': entry.get('id', None)} 
                     for entry in info['entries']]
         else:
             # Handle single video or search
@@ -71,11 +81,23 @@ async def get_song_info(ytdl, url):
             return [{'title': info.get('title', 'Unknown'),
                     'url': info.get('url', None),
                     'webpage_url': info.get('webpage_url', url),
-                    'duration': info.get('duration', 0)}]
+                    'duration': info.get('duration', 0),
+                    'video_id': info.get('id', None)}]
     except Exception as e:
         logger.error(f"Error extracting info: {e}")
         # Check for private video error
         error_str = str(e)
         if "Private video" in error_str:
             raise ValueError("This is a private video and requires authentication. Please try a different video.")
+        raise
+
+async def get_fresh_stream_url(ytdl, webpage_url):
+    """Get a fresh stream URL for playback (to avoid expired URLs)"""
+    try:
+        info = await extract_info(ytdl, webpage_url)
+        if 'entries' in info:
+            info = info['entries'][0]
+        return info.get('url', None)
+    except Exception as e:
+        logger.error(f"Error getting fresh stream URL: {e}")
         raise

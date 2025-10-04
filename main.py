@@ -2,7 +2,11 @@ import sys
 from dotenv import load_dotenv
 import os
 import asyncio
+import logging
 from src.bot import create_bot
+
+# Suppress matplotlib font warnings
+logging.getLogger('matplotlib').setLevel(logging.WARNING)
 
 
 async def main():

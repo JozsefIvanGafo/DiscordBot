@@ -50,9 +50,6 @@ class Music(commands.Cog):
         self.command_handlers = CommandHandlers(self)
         self.event_handlers = EventHandlers(self)
         
-        # Load saved controllers
-        self.bot.loop.create_task(self.controller_service.restore_controllers())
-        
         logger.info("Music cog loaded with commands")
     
     # Event listener (delegate to event handler)

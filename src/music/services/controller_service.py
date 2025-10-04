@@ -58,7 +58,15 @@ class ControllerService:
     
     async def restore_controllers(self):
         """Restore all saved controllers on bot startup"""
+        # Wait for bot to be ready
+        await self.music_cog.bot.wait_until_ready()
+        
         if not hasattr(self, '_saved_message_ids'):
+            logger.info("No saved message IDs to restore")
+            return
+        
+        if not self._saved_message_ids:
+            logger.info("No music controllers to restore")
             return
             
         logger.info(f"Attempting to restore {len(self._saved_message_ids)} music controllers")
@@ -110,12 +118,13 @@ class ControllerService:
     async def create_controller(self, ctx):
         """Show music controller with buttons"""
         guild_id = ctx.guild.id
+        guild_id_str = str(guild_id)
         
         # Check if we already have a controller for this guild
         existing_controller = None
-        if guild_id in self.controller_messages:
+        if guild_id_str in self.controller_messages:
             try:
-                existing_message = self.controller_messages[guild_id]
+                existing_message = self.controller_messages[guild_id_str]
                 # Verify the message still exists
                 try:
                     await existing_message.edit(content="Updating controller...")
@@ -197,9 +206,10 @@ class ControllerService:
 
     async def _cleanup_existing_controller(self, guild_id):
         """Clean up existing controller if any"""
-        if guild_id in self.controller_messages:
+        guild_id_str = str(guild_id)
+        if guild_id_str in self.controller_messages:
             try:
-                existing_message = self.controller_messages[guild_id]
+                existing_message = self.controller_messages[guild_id_str]
                 try:
                     await existing_message.delete()
                 except discord.NotFound:

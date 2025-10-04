@@ -7,7 +7,7 @@ from .controller import MusicControllerView
 __all__ = [
     'get_ytdlp_options', 'get_ffmpeg_options', 
     'is_youtube_url', 'is_youtube_playlist', 
-    'extract_info', 'get_song_info',
+    'extract_info', 'get_song_info', 'get_fresh_stream_url',
     'QueueManager', 'VoiceManager',
     'format_duration', 'format_time',
     'MusicControllerView'

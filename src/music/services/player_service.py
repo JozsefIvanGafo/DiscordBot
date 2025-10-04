@@ -2,7 +2,7 @@ import asyncio
 import discord
 import logging
 
-from ..utils import get_song_info, is_youtube_playlist
+from ..utils import get_song_info, is_youtube_playlist, get_fresh_stream_url
 
 logger = logging.getLogger('discord')
 
@@ -63,15 +63,28 @@ class PlayerService:
         next_song = self.music_cog.queue_manager.get_next_song(guild_id)
         self.music_cog.queue_manager.set_current_song(guild_id, next_song)
         
-        # Create audio source and play
-        audio_source = discord.FFmpegPCMAudio(next_song['url'], **self.music_cog.ffmpeg_options)
-        voice_client.play(audio_source, after=lambda e: asyncio.run_coroutine_threadsafe(
-            self._play_next_error_handled(guild_id, e), self.bot.loop))
-        
-        logger.info(f"Playing: {next_song['title']} in guild {guild_id}")
-        
-        # Update controller with new song info
-        await self.music_cog.controller_service.update_controller(guild_id)
+        try:
+            # Get fresh stream URL to avoid 403 errors from expired URLs
+            fresh_url = await get_fresh_stream_url(self.music_cog.ytdl, next_song['webpage_url'])
+            if not fresh_url:
+                logger.error(f"Could not get fresh URL for: {next_song['title']}")
+                # Try to play next song
+                await self.play_next(guild_id)
+                return
+            
+            # Create audio source and play with fresh URL
+            audio_source = discord.FFmpegPCMAudio(fresh_url, **self.music_cog.ffmpeg_options)
+            voice_client.play(audio_source, after=lambda e: asyncio.run_coroutine_threadsafe(
+                self._play_next_error_handled(guild_id, e), self.bot.loop))
+            
+            logger.info(f"Playing: {next_song['title']} in guild {guild_id}")
+            
+            # Update controller with new song info
+            await self.music_cog.controller_service.update_controller(guild_id)
+        except Exception as e:
+            logger.error(f"Error playing song {next_song['title']}: {e}")
+            # Try to play next song
+            await self.play_next(guild_id)
     
     async def _play_next_error_handled(self, guild_id, error):
         """Handle errors when playing next song"""

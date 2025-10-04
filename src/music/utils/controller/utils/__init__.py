@@ -5,6 +5,7 @@ from .skip import skip_callback
 from .queue import clear_queue_callback, queue_callback
 from .join import join_vc_callback
 from .leave import leave_vc_callback
+from .repeat import repeat_callback
 
 
 __all__ = [
@@ -18,5 +19,6 @@ __all__ = [
     'queue_callback',
     'play_next',
     'join_vc_callback',
-    'leave_vc_callback'
+    'leave_vc_callback',
+    'repeat_callback'
 ]

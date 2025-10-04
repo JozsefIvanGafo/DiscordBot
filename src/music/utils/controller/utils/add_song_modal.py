@@ -49,7 +49,7 @@ class AddSongModal(Modal):
             #type_msg = 'playlist' if is_youtube_playlist(url) else 'video/search'
             #await interaction.followup.send(f"Processing {type_msg}... This may take a moment.", ephemeral=True)
             
-            songs_info = await get_song_info(self.music_cog.ytdl, url)
+            songs_info, metadata = await get_song_info(self.music_cog.ytdl, url)
             if not songs_info:
                 await interaction.followup.send("No songs found for the provided URL or search query", ephemeral=True)
                 return

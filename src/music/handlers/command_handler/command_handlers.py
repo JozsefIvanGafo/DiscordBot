@@ -6,7 +6,8 @@ from .utils import (handle_play,
                     handle_queue,
                     handle_leave,
                     handle_controller,
-                    handle_music_channel)
+                    handle_music_channel,
+                    handle_repeat)
 
 
 
@@ -43,4 +44,8 @@ class CommandHandlers:
     async def handle_music_channel(self, ctx):
         """Set the current channel as the dedicated music channel for the bot's music controller"""
         await handle_music_channel(self, ctx)
+    
+    async def handle_repeat(self, ctx):
+        """Handle repeat command - toggle through repeat modes"""
+        await handle_repeat(self, ctx)
 

@@ -61,6 +61,16 @@ class AdminRoleView(View):
         )
         show_button.callback = self.show_panel_callback
         self.add_item(show_button)
+        
+        # Shutdown bot button (second row)
+        shutdown_button = Button(
+            style=discord.ButtonStyle.danger,
+            label="Shutdown Bot",
+            custom_id="shutdown_bot",
+            emoji="🛑"
+        )
+        shutdown_button.callback = self.shutdown_bot_callback
+        self.add_item(shutdown_button)
     
     async def add_role_callback(self, interaction):
         """Start the conversational flow for adding a role"""
@@ -135,3 +145,44 @@ class AdminRoleView(View):
             str(interaction.channel_id),
             str(message.id)
         )
+    
+    async def shutdown_bot_callback(self, interaction):
+        """Shutdown the bot - requires administrator permission"""
+        # Check if user has administrator permission
+        if not interaction.user.guild_permissions.administrator:
+            await interaction.response.send_message(
+                "❌ You need Administrator permission to shutdown the bot!",
+                ephemeral=True
+            )
+            return
+        
+        # Confirm and shutdown
+        await interaction.response.send_message(
+            "🛑 Shutting down bot...",
+            ephemeral=True
+        )
+        
+        import logging
+        import sys
+        import asyncio
+        
+        logger = logging.getLogger('discord')
+        logger.info(f"Bot shutdown initiated by {interaction.user} (ID: {interaction.user.id})")
+        
+        # Schedule shutdown
+        async def do_shutdown():
+            await asyncio.sleep(1)
+            
+            # Close all voice clients
+            for voice_client in self.role_manager.bot.voice_clients:
+                try:
+                    await voice_client.disconnect(force=True)
+                except:
+                    pass
+            
+            await self.role_manager.bot.close()
+            await asyncio.sleep(1)
+            
+            sys.exit(0)
+        
+        asyncio.create_task(do_shutdown())

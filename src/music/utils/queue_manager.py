@@ -4,6 +4,7 @@ class QueueManager:
     def __init__(self):
         self.queues = {}  # guild_id: deque(songs)
         self.current_songs = {}  # guild_id: current_song_info
+        self.repeat_mode = {}  # guild_id: 'off', 'one', or 'all'
     
     def get_queue(self, guild_id):
         """Get the queue for a guild"""
@@ -51,3 +52,29 @@ class QueueManager:
             del self.queues[guild_id]
         if guild_id in self.current_songs:
             del self.current_songs[guild_id]
+        if guild_id in self.repeat_mode:
+            del self.repeat_mode[guild_id]
+    
+    def get_repeat_mode(self, guild_id):
+        """Get the repeat mode for a guild"""
+        return self.repeat_mode.get(guild_id, 'off')
+    
+    def set_repeat_mode(self, guild_id, mode):
+        """Set the repeat mode for a guild. Modes: 'off', 'one', 'all'"""
+        if mode in ['off', 'one', 'all']:
+            self.repeat_mode[guild_id] = mode
+        else:
+            raise ValueError(f"Invalid repeat mode: {mode}. Must be 'off', 'one', or 'all'")
+    
+    def toggle_repeat(self, guild_id):
+        """Toggle through repeat modes: off -> one -> all -> off"""
+        current = self.get_repeat_mode(guild_id)
+        if current == 'off':
+            self.repeat_mode[guild_id] = 'one'
+            return 'one'
+        elif current == 'one':
+            self.repeat_mode[guild_id] = 'all'
+            return 'all'
+        else:  # 'all'
+            self.repeat_mode[guild_id] = 'off'
+            return 'off'

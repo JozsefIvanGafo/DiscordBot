@@ -91,6 +91,10 @@ class Music(commands.Cog):
             await ctx.respond("✅ Music controller has been set up in this channel. It will persist across bot restarts.", ephemeral=True)
         else:
             await ctx.respond("⚠️ There was an error setting up the music controller.", ephemeral=True)
+    
+    @bridge.bridge_command(name="repeat", description="Toggle repeat mode: off -> one song -> all songs -> off")
+    async def repeat(self, ctx):
+        await self.command_handlers.handle_repeat(ctx)
 
 
 def setup(bot):

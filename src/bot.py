@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands, bridge
 import logging
 from .commands import Ping, Roulette
-from .moderation import AuditLog,SetPrefix
+from .moderation import AuditLog, SetPrefix, AdminCommands
 from .events import BirthDate
 from .music import Music
 from .role_manager import RoleManager
@@ -39,6 +39,7 @@ class DiscordBot(bridge.Bot):
         self.add_cog(SetPrefix(self))
         self.add_cog(BirthDate(self))
         self.add_cog(AuditLog(self))
+        self.add_cog(AdminCommands(self))
         self.add_cog(Music(self))
         self.add_cog(RoleManager(self))
         self.add_cog(Statistics(self))

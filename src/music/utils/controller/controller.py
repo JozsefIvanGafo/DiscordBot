@@ -10,7 +10,8 @@ from .utils import (AddSongModal,
                     queue_callback,
                     play_next,
                     join_vc_callback,
-                    leave_vc_callback)
+                    leave_vc_callback,
+                    repeat_callback)
 
 
 class MusicControllerView(View):
@@ -82,6 +83,14 @@ class MusicControllerView(View):
                                  custom_id="music_leave_vc")
         leave_button.callback = self.leave_vc_callback
         
+        # Repeat button
+        repeat_mode = self.music_cog.queue_manager.get_repeat_mode(self.guild_id)
+        repeat_emojis = {'off': '⏹️', 'one': '🔂', 'all': '🔁'}
+        repeat_button = Button(style=discord.ButtonStyle.secondary,
+                                label=f"{repeat_emojis[repeat_mode]} Repeat",
+                                  custom_id="music_repeat")
+        repeat_button.callback = self.repeat_callback
+        
         # Refresh button - moved to end
         refresh_button = Button(style=discord.ButtonStyle.secondary,
                                  label="🔄 Refresh",
@@ -102,7 +111,8 @@ class MusicControllerView(View):
         self.add_item(join_button)
         self.add_item(leave_button)
         
-        # Third row - refresh button at the end
+        # Third row - repeat and refresh
+        self.add_item(repeat_button)
         self.add_item(refresh_button)
 
     def get_volume_percentage(self):
@@ -151,6 +161,10 @@ class MusicControllerView(View):
 
         # Send the modal
         await interaction.response.send_modal(modal)
+    
+    async def repeat_callback(self, interaction):
+        """Toggle repeat mode"""
+        await repeat_callback(self, interaction)
 
     async def play_next(self, guild_id):
         """Play the next song in the queue"""

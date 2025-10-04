@@ -295,6 +295,11 @@ class ControllerService:
             status = "Disconnected"
             if voice_client:
                 status = "Playing" if voice_client.is_playing() else "Paused" if voice_client.is_paused() else "Connected (Idle)"
+            
+            # Get repeat mode
+            repeat_mode = self.music_cog.queue_manager.get_repeat_mode(guild_id)
+            repeat_emojis = {'off': '⏹️ Off', 'one': '🔂 One Song', 'all': '🔁 All Songs'}
+            repeat_status = repeat_emojis.get(repeat_mode, '⏹️ Off')
                 
             # Add info about current song if playing
             if current_song:
@@ -308,6 +313,11 @@ class ControllerService:
                 embed.add_field(
                     name="Status",
                     value=f"{status}",
+                    inline=True
+                )
+                embed.add_field(
+                    name="Repeat",
+                    value=repeat_status,
                     inline=True
                 )
             else:
